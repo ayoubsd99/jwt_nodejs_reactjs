@@ -4,10 +4,10 @@ import Cars from './listcars'
 import Loading from './loadin'
 
 
-const CarsList=()=>{
+const CarsList=({logout})=>{
     const [cars,setcars]=useState([])
     const [loading,setloading]=useState(false)
-
+ 
     const fetchdata=()=>{
         axios({
           method:'get',
@@ -29,10 +29,11 @@ const CarsList=()=>{
         },5000)
        
       },[])
-    
+    console.log(cars);
     return(
         <div className='container'>
         <div className="row">
+          <div><button onClick={()=>logout()}>logout</button> </div>
           {loading?<Cars cars={cars}/>:<Loading/>}
          </div>
          </div>

@@ -1,4 +1,4 @@
-import React,{useState,} from 'react'
+import React,{useEffect,useState} from 'react'
 import './App.css';
 import Login from './landing/login'
 import CarsList from './landing/Cars'
@@ -8,6 +8,25 @@ import qs from 'qs'
 
 function App() {
   const [islogin,setislogin]=useState(false)
+
+  const checkislogin=()=>{
+    const token=localStorage.getItem('token')
+    if(token){
+      setislogin(true)
+    }else{
+      setislogin(false)
+
+    }
+  }
+  useEffect(()=>{
+    checkislogin()
+  },[])
+
+  const logout=()=> {
+    setislogin(false)
+    localStorage.removeItem('token')
+  }
+
   const handlogin=(data)=>{
     axios({
       method:'POST',
@@ -32,7 +51,7 @@ function App() {
 
   return (
     <div className="App">
-      {islogin?<CarsList/>:<Login handlogin={handlogin}/>}
+      {islogin?<CarsList logout={logout}/>:<Login handlogin={handlogin}/>}
     </div>
   );
 }
